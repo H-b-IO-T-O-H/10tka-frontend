@@ -1,0 +1,18 @@
+input.input-number {
+  border: 1px solid #a8a8a8;
+  border-radius: 5px;
+  color: #6c6c6c;
+  font-size: 0.9rem;
+  outline: none;
+  width: 60px;
+  height: 30px;
+
+  &:focus {
+    border-color: #4db6ac;
+  }
+
+  &::placeholder {
+    color: #bbbbbb;
+    font-size: 0.65rem;
+  }
+}

@@ -1,0 +1,18 @@
+.Auth__form{
+    width: 310px;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+.Auth__btn{
+    background: #449393;
+    color: aliceblue;
+    margin-top: 5px;
+    &:hover {
+        background: #6dc1c1;
+        color: aliceblue;
+    }
+    &:active {
+        background: #355d5d;
+    }
+}

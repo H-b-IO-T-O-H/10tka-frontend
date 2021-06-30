@@ -1,0 +1,44 @@
+button.btn-tag {
+  outline: none;
+  border-radius: 10px;
+  padding: 3px 10px 3px 10px !important;
+  width: 130px;
+  color: white;
+  font-weight: 500;
+  font-size: small;
+  border: 1px solid transparent;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+button.btn-tag:active {
+  transform: translateY(2px);
+}
+
+button.btn-tag:hover {
+  box-shadow: 0 2px 8px 0 #e8e6e6, 0 5px 10px 0 #d4d2d2;
+}
+
+button.btn-tag-general {
+  background-color: #697cd9;
+}
+
+button.btn-tag-general:hover {
+  background-color: #3650e3;
+}
+
+button.btn-tag-important {
+  background-color: #e06b6b;
+}
+
+button.btn-tag-important:hover {
+  background-color: #e54444;
+}
+
+button.btn-tag-educational {
+  background-color: #6abf6c;
+}
+
+button.btn-tag-educational:hover {
+  background-color: #399e3b;
+}
+

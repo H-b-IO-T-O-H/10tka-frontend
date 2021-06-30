@@ -1,0 +1,61 @@
+@import "../../styles/main";
+
+.panel {
+  //margin-bottom: 15px;
+  border-radius: 10px;
+  max-width: 400px;
+  min-height: 50px;
+  background-color: #e7e7e7;
+
+
+  &__header{
+    min-height: 30px;
+    font-size: 0.95rem;
+    padding: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    color: #ffffff;
+    font-weight: bold;
+    background-color: #a0c8c2;
+    border-radius: 10px 10px 0 0;
+    border: 1px solid transparent;
+  }
+  &__body {
+    height: 40px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    margin-bottom: 3px;
+  }
+  &__footer {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: grey;
+  }
+  @media screen and (max-width: #{$little-screen-min}) {
+    font-size: 0.8rem;
+  }
+}
+
+
+select.panel__select {
+  border: 1px solid #a8a8a8;
+  background-color: white;
+  border-radius: 5px;
+  color: #6c6c6c;
+  font-size: 0.9rem;
+  outline: none;
+  width: 60px;
+  height: 30px;
+
+  &:focus {
+    border-color: #4db6ac;
+  }
+  @media screen and (max-width: #{$little-screen-min}) {
+    width: 35px;
+  }
+}
