@@ -5,6 +5,16 @@ img.navbar__avatar {
   border: 1px solid white; /* Параметры границы */
   width: 60px;
   height: 60px;
+
+  pointer-events: none;
+
+  @media screen and (max-width: #{$large-screen-min}) {
+    width: 44px;
+    height: 44px;
+
+    cursor: pointer;
+    pointer-events: all;
+  }
 }
 
 .navbar__dropdown {
@@ -35,6 +45,7 @@ div.navbar__main {
   &_strong {
     font-weight: bold;
   }
+
   @media screen and (min-width: #{$medium-screen-min}) and (max-width: #{$large-screen-min}) {
     font-size: 0.9rem;
   }
@@ -52,3 +63,10 @@ button.link-logout {
     text-decoration: none;
   }
 }
+
+.navbar__brand {
+  @media screen and (max-width: #{$screen-min}) {
+    display: none;
+  }
+}
+
