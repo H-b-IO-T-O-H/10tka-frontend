@@ -40,22 +40,26 @@ const Header = () => {
         collapseChange(!collapseIsOpen);
     }, [collapseIsOpen]);
 
+    const collapseCondition: string = collapseIsOpen ? 'opened' : 'closed';
+
     return (
-        <div>
-            {Rendered() ? <div className="navbar__main">
-                <MDBNavbar className="mb-3 justify-content-between" color="teal lighten-2" dark expand="lg">
-                    <MDBNavbarToggler onClick={toggleCollapse} />
+        <React.Fragment>
+            {Rendered() ? <div className={`navbar__main mb-3`}>
+                <MDBNavbar color="teal lighten-2" dark expand="lg">
+                    <MDBNavbarToggler onClick={toggleCollapse}/>
 
                     <MDBNavbarBrand className="navbar__brand mr-0 mr-lg-3">
                         <strong className="white-text">10-tka</strong>
                     </MDBNavbarBrand>
 
-                    <div className="order-lg-last">
+                    <div className="order-lg-last d-inline-flex">
                         <MDBNavbarNav>
                             <div className="d-flex align-items-center justify-content-end flex-nowrap">
                                 <MDBNavItem className="px-3 px-lg-0">
                                     <img className="navbar__avatar"
-                                         onClick={() => { history.push(Urls.user.slugMe) }}
+                                         onClick={() => {
+                                             history.push(Urls.user.slugMe)
+                                         }}
                                          src={localStorage.getItem("user_role") === "admin" ? Admin : Avatar}
                                          alt="oops"/>
                                 </MDBNavItem>
@@ -87,8 +91,8 @@ const Header = () => {
                         </MDBNavbarNav>
                     </div>
 
-                    <MDBCollapse id="navbarCollapse" isOpen={collapseIsOpen} navbar>
-                        <MDBNavbarNav left className="col-lg-8">
+                    <div className={`navbar__collapse mr-auto p-3 p-lg-0 ${collapseCondition}`}>
+                        <MDBNavbarNav left onClick={toggleCollapse}>
                             <MDBNavItem active>
                                 <MDBNavLink className="navbar__main_link" to={Urls.feed.slugRoot}>
                                     <div className="navbar__main_strong">Главная</div>
@@ -121,10 +125,10 @@ const Header = () => {
                                 </button>
                             </MDBNavItem>
                         </MDBNavbarNav>
-                    </MDBCollapse>
+                    </div>
                 </MDBNavbar>
             </div> : null}
-        </div>
+        </React.Fragment>
     );
 }
 
