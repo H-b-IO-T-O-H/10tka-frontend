@@ -1,3 +1,5 @@
+@import "../../styles/main";
+
 div.post-view-card {
   min-width: 320px;
   border-radius: 10px;
@@ -6,11 +8,12 @@ div.post-view-card {
 }
 
 img.post-avatar-sm {
-  border-radius: 4px;
-  height: 25px;
-  margin-right: 4px;
-  vertical-align: middle;
   width: 25px;
+  height: 25px;
+
+  margin-right: 4px;
+  border-radius: 4px;
+  vertical-align: middle;
 }
 
 i.post-icon-comment {
@@ -70,6 +73,10 @@ img.post-comment-avatar {
 p.post-title {
   font-weight: 500;
   font-size: 1.15rem;
+
+  @media screen and (max-width: #{$little-screen-min}) {
+    font-size: 1.05rem;
+  }
 }
 
 textarea.post-comment-create {
@@ -108,4 +115,8 @@ div.post-comment-answer {
 p.date-time {
   font-size: 0.9rem;
   font-weight: 400;
+
+  @media screen and (max-width: #{$large-screen-min}) {
+    width: 100%;
+  }
 }

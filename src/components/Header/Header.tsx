@@ -29,18 +29,16 @@ const Header = () => {
         console.log(location.pathname)
         return true
         return [Urls.feed.slugRoot, Urls.timetable.slugEdit,
-            Urls.panel.slugRoot, Urls.root,
-            Urls.post.slugRoot, Urls.post.slugCreate,
-            Urls.user.slugMe, Urls.user.slugRoot, Urls.user.slugProfile].includes(location.pathname)
+                Urls.panel.slugRoot, Urls.root,
+                Urls.post.slugRoot, Urls.post.slugCreate,
+                Urls.user.slugMe, Urls.user.slugRoot, Urls.user.slugProfile].includes(location.pathname)
     }
 
-    const [collapseIsOpen, collapseChange] = useState(false);
+    const [collapseCondition, setCollapseCondition] = useState('closed');
 
     const toggleCollapse = useCallback(() => {
-        collapseChange(!collapseIsOpen);
-    }, [collapseIsOpen]);
-
-    const collapseCondition: string = collapseIsOpen ? 'opened' : 'closed';
+        collapseCondition === 'opened' ? setCollapseCondition('closed') : setCollapseCondition('opened');
+    }, [collapseCondition]);
 
     return (
         <React.Fragment>

@@ -1,16 +1,16 @@
-import React, {Component} from 'react';
+import React, { useState, useEffect } from 'react';
 import ViewPost from "@components/ViewPost";
 import Pagination from "@components/Pagination";
 
 
 const PostsList = () => {
 
-    const [posts, changePosts] = React.useState<Array<React.ReactNode>>([])
+    const [posts, changePosts] = useState<Array<React.ReactNode>>([])
 
-    React.useEffect(() => {
+    useEffect(() => {
         const oldPosts = [];
         for (let i = 1; i < 4; ++i) {
-            oldPosts.push(<div className="m-3" key={i}><ViewPost id={i}/></div>)
+            oldPosts.push(<div className="my-3" key={i}><ViewPost id={i}/></div>)
         }
         changePosts(oldPosts)
     }, [posts]);

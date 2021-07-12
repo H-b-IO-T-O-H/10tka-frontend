@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import "./ViewPost.scss"
-import BlogTag from "@components/Blog/blogTag";
+import BlogTag from "@components/BlogTag/BlogTag";
 import {Link} from "react-router-dom";
 import {useHistory, useLocation} from "react-router-dom";
 import PostComment from "@components/PostCommentView";
 import Hamster from "@media/hamster.webp"
 import CommentView from "@components/PostCommentView";
 import {Urls} from "@config/urls";
+import BlogTagList from "@components/BlogTagList";
 
 let answersExample = [
     {text: "first answer text"},
@@ -32,11 +33,11 @@ export const PostView: React.FC<Props> = ({id}) => {
     const commentsForm = ["Комментарий", "Комментария", "Комментариев"];
     const history = useHistory();
     const location = useLocation();
-    const [isOutputFull, changeOutputFull] = React.useState(location.pathname.includes('/posts'));
-    const [isLiked, changeLiked] = React.useState(false);
-    const [likesCnt, changeLikesCnt] = React.useState(0);
-    const [commentsCnt, changeCommentsCnt] = React.useState(0);
-    const [comments, changeComments] = React.useState<Array<Comment>>([])
+    const [isOutputFull, changeOutputFull] = useState(location.pathname.includes('/posts'));
+    const [isLiked, changeLiked] = useState(false);
+    const [likesCnt, changeLikesCnt] = useState(0);
+    const [commentsCnt, changeCommentsCnt] = useState(0);
+    const [comments, changeComments] = useState<Array<Comment>>([])
 
 
     const declOfNum = (n: number, text_forms: Array<string>) => {
@@ -78,20 +79,21 @@ export const PostView: React.FC<Props> = ({id}) => {
 
     return (
         <div
-            className="container-fluid flex-column h-100 justify-content-center align-items-center col-md-10 col-xl-7">
+            className="container-fluid flex-column h-100 justify-content-center align-items-center col-lg-10 col-xl-8 p-0 px-md-3">
             <div className="card">
-                <div className="card-header d-flex flex-row justify-content-between">
+                <div className="card-header d-flex flex-row flex-lg-nowrap flex-wrap justify-content-between align-items-center">
                     {isOutputFull ?
-                        <p className="post-title">Вручение сертификатов семестровых курсов 28 января</p>
+                        <p className="post-title mr-lg-4 mb-lg-3 mb-2">Вручение сертификатов семестровых курсов 28 января</p>
                         :
-                        <Link to={`/posts/${id}`}><p className="post-title">Вручение сертификатов семестровых
-                            курсов 28 января</p></Link>
+                        <Link to={`/posts/${id}`}>
+                            <p className="post-title mr-lg-4 mb-lg-3 mb-2">Вручение сертификатов семестровых курсов 28 января</p>
+                        </Link>
                     }
 
-                    <p className="date-time grey-text"> 25 января 2021 г. в 12:58</p>
+                    <p className="date-time grey-text mb-lg-3 mb-md-2 mb-1">25 января 2021 г. в 12:58</p>
                 </div>
-                <div className="card-body">
-                    <BlogTag/>
+                <div className="card-body pt-sm-3 pt-2">
+                    <BlogTagList/>
                     <p className="mt-3">
                         &nbsp;Поздравляю студентов&nbsp; с окончанием семестровых курсов в
                         Технопарке!<br/>Мы
@@ -118,18 +120,25 @@ export const PostView: React.FC<Props> = ({id}) => {
                         <hr/>
                         <div className="d-flex flex-nowrap flex-row justify-content-between">
                             <div className="ml-0">
-                                <img className="post-avatar-sm" src="/public/img/hamster.webp"
-                                     alt="img not loaded"/>
                                 <Link to={Urls.user.getUser(1)}>
-                                    Сергей Козлачков
+                                    <img className="post-avatar-sm" src={Hamster}
+                                         alt="img not loaded"/>
+                                    <span className="d-none d-sm-inline">{'Сергей Козлачков'}</span>
                                 </Link>
                             </div>
 
                             <div className="mr-3">
                                 <a id="go-to-comments" className="href-transparent" href="#comments"/>
                                 <button className="btn-post-social" onClick={commentsRedirectHandler}>
-                                    <i className="fa fa-comments fa-lg post-icon-comment"/></button>
-                                {'5 комментов'}
+                                    <i className="fa fa-comments fa-lg post-icon-comment"/>
+                                </button>
+                                <p className="d-inline">
+                                    {'5'}
+                                    <span  className="d-none d-lg-inline">
+                                        {' комментов'}
+                                    </span>
+
+                                </p>
                                 <button className="btn-post-social btn-post-like"
                                         onClick={() => {
                                             changeLiked(!isLiked);
