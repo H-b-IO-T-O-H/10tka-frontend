@@ -26,8 +26,6 @@ const Header = () => {
     const history = useHistory();
 
     const Rendered = () => {
-        console.log(location.pathname)
-        return true
         return [Urls.feed.slugRoot, Urls.timetable.slugEdit,
         Urls.panel.slugRoot, Urls.root,
         Urls.post.slugRoot, Urls.post.slugCreate,
