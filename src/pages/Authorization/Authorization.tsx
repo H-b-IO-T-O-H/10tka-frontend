@@ -54,36 +54,36 @@ const Auth = () => {
 
         //addUsers();
 
-        localStorage.setItem("loginTime", Date.now().toString());
-        localStorage.setItem("user_role", 'admin')
-        const userGroup = "IU10-83";
-        history.push(Urls.feed.slugRoot);
+        // localStorage.setItem("loginTime", Date.now().toString());
+        // localStorage.setItem("user_role", 'admin')
+        // const userGroup = "IU10-83";
+        // history.push(Urls.feed.slugRoot);
 
-        // makePost(`${DOMAIN}${LOGIN}`, {
-        //     email: email,
-        //     password: password,
-        //     checkbox: checkBox
-        // }).then((response) => {
-        //     localStorage.setItem("loginTime", Date.now().toString());
-        //     const userGroup = response.data.user.group;
-        //     //console.log("User = ", response.data.user)
-        //     if (userGroup !== "") {
-        //         localStorage.setItem("user_group", response.data.user.group)
-        //     }
-        //     localStorage.setItem("user_role", response.data.user.role)
-        //     history.push(Urls.timetable.slugRoot);
-        // }).catch((error) => {
-        //     if (error.response) {
-        //         if (error.response.status === 404) {
-        //             setUserError(ERROR_AUTHORIZATION);
-        //         } else {
-        //             setUserError(ERROR_SERVER);
-        //         }
-        //     } else {
-        //         setUserError(SERVER_UNAVAILABLE);
-        //     }
-        //     return;
-        // });
+        makePost(`${DOMAIN}${LOGIN}`, {
+            email: email,
+            password: password,
+            checkbox: checkBox
+        }).then((response) => {
+            localStorage.setItem("loginTime", Date.now().toString());
+            const userGroup = response.data.user.group;
+            //console.log("User = ", response.data.user)
+            if (userGroup !== "") {
+                localStorage.setItem("user_group", response.data.user.group)
+            }
+            localStorage.setItem("user_role", response.data.user.role)
+            history.push(Urls.timetable.slugRoot);
+        }).catch((error) => {
+            if (error.response) {
+                if (error.response.status === 404) {
+                    setUserError(ERROR_AUTHORIZATION);
+                } else {
+                    setUserError(ERROR_SERVER);
+                }
+            } else {
+                setUserError(SERVER_UNAVAILABLE);
+            }
+            return;
+        });
 
     }, [email, password, checkBox, history]);
 
@@ -125,31 +125,6 @@ const Auth = () => {
     }, []);
 
     return (
-        // <div className="Auth h-100 d-flex justify-content-center align-items-center text-center">
-        //     <form className="Auth__form">
-        //         <div className="form-group">
-        //             <div>Email</div>
-        //             {(emailDirty && emailError) && <AuthError msg={emailError}/>}
-        //             <input onChange={EmailHandler} value={email} name="email" onBlur={BlurHandler}
-        //                    type="text" className="form-control"
-        //                    placeholder="Введите email"/>
-        //         </div>
-        //         <div className="form-group">
-        //             <div>Пароль</div>
-        //             {(passwordDirty && passwordError) && <AuthError msg={passwordError}/>}
-        //             <input onChange={PasswordHandler} value={password} name="password"
-        //                    onBlur={BlurHandler} type="password" className="form-control Auth__pass"
-        //                    placeholder="Введите пароль"/>
-        //         </div>
-        //         <div className="form-check">
-        //             <input onChange={CheckBoxHandler} type="checkbox" className="form-check-input"/>
-        //             <div className="form-check-div">Запомнить</div>
-        //         </div>
-        //         {(userError) && <AuthError msg={userError}/>}
-        //         <button disabled={!formValid} onClick={HandleSubmit} type="submit" className="btn Auth__btn mt-2">Войти
-        //         </button>
-        //     </form>
-        // </div>
         <div className="container-fluid d-flex h-100 justify-content-center align-items-center text-center">
             <div className="row bg-white shadow-sm m-1">
                 <div className="col border rounded p-4">
