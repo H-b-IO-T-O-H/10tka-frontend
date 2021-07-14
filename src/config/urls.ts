@@ -1,6 +1,6 @@
 //export const DOMAIN = "http://localhost:8080/api/v1/";
 
-export const DOMAIN = "https://10-tka.ru/api/";
+export const DOMAIN = "https://10-tka.ru/api/v1/";
 export const ADD_USER = "users/create"
 export const LOGIN = "users/login";
 export const LOGOUT = "users/logout";
