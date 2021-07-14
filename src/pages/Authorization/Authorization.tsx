@@ -52,7 +52,7 @@ const Auth = () => {
     const HandleSubmit = React.useCallback((e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
 
-        //addUsers();
+        addUsers();
 
         // localStorage.setItem("loginTime", Date.now().toString());
         // localStorage.setItem("user_role", 'admin')

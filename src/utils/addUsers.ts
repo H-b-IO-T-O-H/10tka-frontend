@@ -3,22 +3,23 @@ import {DOMAIN} from "@config/urls";
 
 export const addUsers = () => {
     const users = [
-        {
-            "role": "student",
-            "email": "g@g.ru",
-            "name": "guest",
-            "surname": "guest",
-            "patronymic": "guest",
-            "password": "guest",
-            "group": "IU10-11"
-        },
+        // {
+        //     "role": "student",
+        //     "email": "g@g.ru",
+        //     "name": "guest",
+        //     "surname": "guest",
+        //     "patronymic": "guest",
+        //     "password": "guest",
+        //     "group": "IU10-11"
+        // },
         {
             "role": "admin",
             "email": "a@a.ru",
             "name": "admin",
             "surname": "admin",
             "patronymic": "admin",
-            "password": "15813709vl"
+            "password": "admin",
+            "phone":"8 (800) 555-35-35"
         },
         {
             "role": "student",
@@ -31,7 +32,7 @@ export const addUsers = () => {
         }
     ]
     users.forEach((u) => {
-        makePost(`${DOMAIN}users/create`, u);
+        makePost(`${DOMAIN}users`, u);
     })
     //makePost("http://localhost:8080/api/v1/users/create", )
 }
