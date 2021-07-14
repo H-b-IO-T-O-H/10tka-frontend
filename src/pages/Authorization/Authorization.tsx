@@ -52,7 +52,7 @@ const Auth = () => {
     const HandleSubmit = React.useCallback((e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
 
-        addUsers();
+        //addUsers();
 
         // localStorage.setItem("loginTime", Date.now().toString());
         // localStorage.setItem("user_role", 'admin')
@@ -71,7 +71,7 @@ const Auth = () => {
                 localStorage.setItem("user_group", response.data.user.group)
             }
             localStorage.setItem("user_role", response.data.user.role)
-            history.push(Urls.timetable.slugRoot);
+            history.push(Urls.feed.slugRoot);
         }).catch((error) => {
             if (error.response) {
                 if (error.response.status === 404) {
