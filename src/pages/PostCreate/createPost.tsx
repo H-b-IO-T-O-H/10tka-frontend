@@ -1,4 +1,4 @@
-import React, {FormEvent} from "react";
+import React, {FormEvent, useState} from "react";
 import {MDBBtn, MDBInput} from "mdbreact";
 import {Editor} from "@tinymce/tinymce-react";
 import PulseCheckBox from "@components/PulseCheckBox";
@@ -8,6 +8,9 @@ import {getTinymce} from "@tinymce/tinymce-react/lib/es2015/main/ts/TinyMCE";
 import Admin from "@media/admin.jpg"
 
 import "./createPost.scss";
+import {DOMAIN, Urls} from "@config/urls";
+import {makeGet, makePost} from "@utils/network";
+import StatusLabel from "@components/StatusLabel";
 
 type PostInfo = {
     title: string,
@@ -27,15 +30,30 @@ const CreatePost = () => {
         content: "",
         buttonText: "Предпросмотр"
     })
+    const [label, showLabel] = useState({content: "", success: false});
     const [tagContent, changeTagContent] = React.useState("")
-    const [tag, changeTag] = React.useState<HTMLElement | null>()
+    const [tag, changeTag] = React.useState<HTMLElement | null>();
+    const [tagVal, changeTagVal] = React.useState<string>("");
     const [postImgInput, changePostImgInput] = React.useState<HTMLInputElement | null>();
     const [isTextChanged, changeTextFlag] = React.useState(false);
+    const [postId, setPostId] = React.useState(0);
     const history = useHistory();
 
     React.useEffect(() => {
         changeTag(document.getElementById("post-tag"));
         changePostImgInput(document.getElementById("post-img") as HTMLInputElement);
+        makeGet(Urls.post.getCurrent()).then((resp) => {
+            if (resp.status === 200) {
+                if (resp.data && resp.data > 0) {
+                    setPostId(resp.data)
+                } else {
+                    showLabel({content: "Ошибка сервера. Попробуйте позже.", success: false})
+                }
+            }
+        }).catch((err) => {
+            showLabel({content: "Не удалось соединиться с сервером. Попробуйте обновить страницу.", success: false})
+        });
+
     }, []);
 
     const handleTitleChange = React.useCallback((e: FormEvent<HTMLInputElement>) => {
@@ -58,6 +76,17 @@ const CreatePost = () => {
             //tinymce.get("post-create-editor").execCommand("mcePreview");
         } else {
             console.log(postInfo);
+            makePost(Urls.post.post(), {
+                title: postInfo.title,
+                author_id: "1",
+                tag_type: tagVal,
+                content: postInfo.content,
+            }).then((resp) => {
+                console.log(resp.data, resp.status)
+            }).catch((e) => {
+
+            })
+
             //history.push("/posts");
         }
         changeTextFlag(true);
@@ -76,12 +105,15 @@ const CreatePost = () => {
         switch (e.target.value) {
             case "1":
                 tag.style.color = "#34a8bb";
+                changeTagVal("general");
                 break;
             case "2":
                 tag.style.color = "#e86262";
+                changeTagVal("important");
                 break;
-            default:
+            case "3":
                 tag.style.color = "#59b759";
+                changeTagVal("education");
         }
     }, [tag]);
 
@@ -116,6 +148,7 @@ const CreatePost = () => {
                         alt: file.name
                     });
                 }
+
                 reader.readAsDataURL(file);
             };
             input.click();
@@ -124,6 +157,7 @@ const CreatePost = () => {
 
     return (
         <div>
+            <StatusLabel info={label}/>
             <div
                 className="post-card container-fluid d-flex h-100 justify-content-center align-items-center col-xl-10">
                 <form className="post-create-card container">
@@ -200,6 +234,8 @@ const CreatePost = () => {
                                                 paste_retain_style_properties: 'color font-size',
                                                 paste_data_images: false,
                                                 paste_as_text: false,
+                                                images_upload_url: Urls.post.getUploadUrl(postId),
+                                                //images_upload_base_path: '/some/basepath',
                                                 file_picker_callback: filePickerCb,
                                                 content_style: "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }"
                                             }}
@@ -209,7 +245,8 @@ const CreatePost = () => {
                                     </div>
                                 </div>
                                 <div className="mt-3">
-                                    <PulseCheckBox description="Разрешить комментарии" isChecked={handleCheckBoxChange}/>
+                                    <PulseCheckBox description="Разрешить комментарии"
+                                                   isChecked={handleCheckBoxChange}/>
                                 </div>
                             </div>
                             <div className="text-center">

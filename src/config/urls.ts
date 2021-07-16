@@ -1,6 +1,6 @@
-//export const DOMAIN = "http://localhost:8080/api/v1/";
+export const DOMAIN = "http://localhost:8080/api/v1/";
 
-export const DOMAIN = "https://10-tka.ru/api/v1/";
+//export const DOMAIN = "https://10-tka.ru/api/v1/";
 export const ADD_USER = "users/create"
 export const LOGIN = "users/login";
 export const LOGOUT = "users/logout";
@@ -43,7 +43,10 @@ export const Urls = {
     },
     post: {
         slugRoot: POST_URL,
-        slugCreate: `${POST_URL}/create`
+        slugCreate: `${POST_URL}/create`,
+        getCurrent: () => `${DOMAIN}posts/current-id`,
+        getUploadUrl: (postId: number) => `${DOMAIN}posts/${postId}/upload-image`,
+        post: () => `${DOMAIN}posts/`
     },
     discipline: {
         getAll: () => `${DOMAIN}disciplines/all`

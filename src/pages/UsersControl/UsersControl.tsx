@@ -181,7 +181,7 @@ const UsersControl = () => {
             setTimer(window.setTimeout(() => {
                 inputPasswd.type = "password";
                 clearTimeout(timer);
-            }, 2000));
+            }, 3000));
             inputPasswd.type = "text";
         }
         oldUser.password = btnPasswd.genPasswd(15);
@@ -433,7 +433,7 @@ const UsersControl = () => {
                             <div className="d-flex flex-row align-items-center">
                                 <input id="input-password" className="users-control_input"
                                        value={userInfo.password} onChange={handleUserInfo}
-                                       disabled={true} onBlur={handleBlur}/>
+                                       disabled={false} onBlur={handleBlur}/>
                                 <button type="button" onClick={handlePassword}
                                         className="tag-btn ml-1"><FontAwesomeIcon className="icon-reload"
                                                                                   icon={faRedoAlt}

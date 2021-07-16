@@ -13,24 +13,24 @@ type Props = {
 export const PrivateRoute: React.FC<Props> = ({component: Component, ...rest}) => {
     const history = useHistory()
 
-    useEffect(() => {
-        const ServerCheckLogin = async () => {
-            return makeGet(`${DOMAIN}${ME}`);
-        }
+    // useEffect(() => {
+    //     const ServerCheckLogin = async () => {
+    //         return makeGet(`${DOMAIN}${ME}`);
+    //     }
+    //
+    //     ServerCheckLogin().then((r) => {
+    //         if (r.status !== 200) {
+    //             localStorage.setItem("loginTime", "");
+    //             history.push(Urls.auth)
+    //         }
+    //     }).catch(() => {
+    //         localStorage.setItem("loginTime", "");
+    //         history.push(Urls.auth)
+    //     })
+    // }, [history, history.location.pathname])
 
-        ServerCheckLogin().then((r) => {
-            if (r.status !== 200) {
-                localStorage.setItem("loginTime", "");
-                history.push(Urls.auth)
-            }
-        }).catch(() => {
-            localStorage.setItem("loginTime", "");
-            history.push(Urls.auth)
-        })
-    }, [history, history.location.pathname])
-
-    const authed = DefaultCheckLogin();
-    //const authed = true;
+    //const authed = DefaultCheckLogin();
+    const authed = true;
 
     return (
         <Route {...rest}
