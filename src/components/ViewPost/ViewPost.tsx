@@ -134,7 +134,7 @@ export const PostView: React.FC<Props> = ({id, data}) => {
             } else if (resp.status === 404) {
                 showLabel({success: false, content: "Пост не найден."});
             }
-            history.push(Urls.feed.slugRoot)
+            history.replace(Urls.feed.slugRoot)
         }).catch((err) => {
             if (err.status === 404) {
                 showLabel({success: false, content: "Пост не найден."});
