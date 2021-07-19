@@ -26,10 +26,16 @@ const Header = () => {
     const history = useHistory();
 
     const Rendered = () => {
+        const path = location.pathname;
+        let postId = 0;
+        if (path.includes("posts")) {
+            let urlPath = path.split("/");
+            postId = parseInt(urlPath[urlPath.length - 1]);
+        }
         return [Urls.feed.slugRoot, Urls.timetable.slugEdit,
         Urls.panel.slugRoot, Urls.root,
-        Urls.post.slugRoot, Urls.post.slugCreate,
-        Urls.user.slugMe, Urls.user.slugRoot, Urls.user.slugProfile].includes(location.pathname)
+        `${Urls.post.slugRoot}/${postId}`, Urls.post.slugCreate,
+        Urls.user.slugMe, Urls.user.slugRoot, Urls.user.slugProfile].includes(path)
     }
 
     const [collapseIsOpen, collapseChange] = useState(false);

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import "./ViewPost.scss"
 import BlogTag from "@components/Blog/blogTag";
 import {Link} from "react-router-dom";
@@ -7,6 +7,9 @@ import PostComment from "@components/PostCommentView";
 import Hamster from "@media/hamster.webp"
 import CommentView from "@components/PostCommentView";
 import {Urls} from "@config/urls";
+import {makeDelete, makeGet} from "@utils/network";
+import HTMLReactParser from 'html-react-parser';
+import StatusLabel from "@components/StatusLabel";
 
 let answersExample = [
     {text: "first answer text"},
@@ -18,6 +21,16 @@ let answersExample = [
 
 type Props = {
     id: string | number;
+    data: {
+        post_id: 0,
+        title: "",
+        author_id: 0,
+        tag_type: "",
+        content: "",
+        created: "",
+        is_edited: false,
+        comments: false
+    }
 }
 
 type Comment = {
@@ -28,15 +41,54 @@ type Comment = {
     date?: string
 }
 
-export const PostView: React.FC<Props> = ({id}) => {
+export const PostView: React.FC<Props> = ({id, data}) => {
+    const [label, showLabel] = useState({content: "", success: false});
     const commentsForm = ["Комментарий", "Комментария", "Комментариев"];
     const history = useHistory();
     const location = useLocation();
-    const [isOutputFull, changeOutputFull] = React.useState(location.pathname.includes('/posts'));
+    const [isOutputFull, changeOutputFull] = React.useState(false);
     const [isLiked, changeLiked] = React.useState(false);
     const [likesCnt, changeLikesCnt] = React.useState(0);
     const [commentsCnt, changeCommentsCnt] = React.useState(0);
-    const [comments, changeComments] = React.useState<Array<Comment>>([])
+    const [comments, changeComments] = React.useState<Array<Comment>>([]);
+    const [postData, changePostData] = React.useState({
+        post_id: 0,
+        title: "",
+        author_id: 0,
+        tag_type: "",
+        content: "",
+        created: "",
+        is_edited: false,
+        comments: false
+    });
+
+    useEffect(() => {
+        if (location.pathname.includes('/posts')) {
+            changeOutputFull(true);
+            let urlPath = location.pathname.split("/");
+            const postId = parseInt(urlPath[urlPath.length - 1]);
+            makeGet(Urls.post.getById(postId)).then((resp) => {
+                if (resp.status === 200) {
+                    changePostData(resp.data);
+                    console.log(resp.data)
+                }
+            }).catch((err) => {
+                if (err && err.message === "Network Error") {
+                    showLabel({success: false, content: "Не удается связаться с сервером."})
+                } else if (err.response) {
+                    if (err.response.status === 404) {
+                        showLabel({success: false, content: err.response.data})
+                        history.replace("/*")
+                        return
+                    } else {
+                        showLabel({success: false, content: err.response.data})
+                    }
+                }
+            })
+        } else {
+            changePostData(data);
+        }
+    }, [])
 
 
     const declOfNum = (n: number, text_forms: Array<string>) => {
@@ -56,7 +108,7 @@ export const PostView: React.FC<Props> = ({id}) => {
 
     const commentsRedirectHandler = () => {
         if (!isOutputFull) {
-            history.push(`/posts/${id}`)
+            history.push(`/posts/${data.post_id}`)
         }
         document.getElementById("go-to-comments")?.click()
     }
@@ -75,45 +127,43 @@ export const PostView: React.FC<Props> = ({id}) => {
         changeComments(oldComments);
     }
 
+    const deletePost = React.useCallback(() => {
+        makeDelete(Urls.post.delete(data.post_id), null).then((resp) => {
+            if (resp.status === 200) {
+                showLabel({success: true, content: "Пост успешно удален."});
+            } else if (resp.status === 404) {
+                showLabel({success: false, content: "Пост не найден."});
+            }
+            history.push(Urls.feed.slugRoot)
+        }).catch((err) => {
+            if (err.status === 404) {
+                showLabel({success: false, content: "Пост не найден."});
+            } else {
+                showLabel({success: false, content: err.content});
+            }
+        })
+    }, [])
 
     return (
         <div
             className="container-fluid flex-column h-100 justify-content-center align-items-center col-md-10 col-xl-7">
+            <StatusLabel info={label}/>
             <div className="card">
                 <div className="card-header d-flex flex-row justify-content-between">
                     {isOutputFull ?
-                        <p className="post-title">Вручение сертификатов семестровых курсов 28 января</p>
+                        <p className="post-title">{postData.title}</p>
                         :
-                        <Link to={`/posts/${id}`}><p className="post-title">Вручение сертификатов семестровых
-                            курсов 28 января</p></Link>
+                        <Link to={`/posts/${postData.post_id}`}><p className="post-title">{postData.title}</p></Link>
                     }
 
-                    <p className="date-time grey-text"> 25 января 2021 г. в 12:58</p>
+                    <p className="date-time grey-text">{postData.created}</p>
                 </div>
                 <div className="card-body">
                     <BlogTag/>
-                    <p className="mt-3">
-                        &nbsp;Поздравляю студентов&nbsp; с окончанием семестровых курсов в
-                        Технопарке!<br/>Мы
-                        знаем, что это было непросто, но все вы – молодцы!&nbsp;<br/>Каждого&nbsp; успешного
-                        выпускника&nbsp; ждет сертификат, который в будущем можно использовать в резюме или
-                        портфолио.<br/><br/>Даже в режиме удаленки&nbsp;мы не просто отправляем сертификаты,
-                        а вручаем их. Поэтому приглашаем всех выпускников на онлайн вручение, которое
-                        начнется в четверг, <strong>28 января, в 16:00.</strong><br/><br/><strong>Программа
-                        мероприятия:</strong><br/>- приветственные слова руководителя департамента
-                        образования Mail.ru Group Анны Степановой,&nbsp;<br/>- специальный гость и
-                        интерактивная часть,&nbsp;<br/>- Андрей Викторович Пролетарский и
-                        преподаватели&nbsp; Технопарка скажут пару напутственных слов,&nbsp;<br/>-&nbsp; я
-                        расскажу вам о тех курсах, которые&nbsp; мы запланировали в семестре Весна -
-                        2021&nbsp;<br/>- вручение сертификатов.<br/><br/>Важно! Бумажную версию сертификата
-                        каждый из вас сможет получить в феврале. Вся информация о выдаче будет на
-                        портале.<br/><br/><strong>Ссылка на подключение:</strong><br/>Мероприятие будет
-                        закрытым и пройдет в любимом Зуме. Ссылка на комнату&nbsp;<a
-                        href="https://mailru.zoom.us/j/92900161419?pwd=UFZzbnl3TkgzbXRiWVBaU2txMEtrdz09"
-                        target="_blank"
-                        rel="noopener">https://mailru.zoom.us/j/92900161419?pwd=UFZzbnl3TkgzbXRiWVBaU2txMEtrdz09</a><br/><br/>Мы
-                        пришлем напоминание и ссылку еще раз в день вручения за пару часов до старта.&nbsp;
-                        <br/>Увидимся!&nbsp;&nbsp;</p>
+                    <p>{postData.tag_type}</p>
+                    {HTMLReactParser(postData.content)}
+                    <button className="btn-post-social btn-post-like"
+                            onClick={deletePost}><i className="fa fa-trash fa-lg"/></button>
                     <footer className="grey-text">
                         <hr/>
                         <div className="d-flex flex-nowrap flex-row justify-content-between">

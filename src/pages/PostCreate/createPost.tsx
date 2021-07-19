@@ -75,10 +75,9 @@ const CreatePost = () => {
             getTinymce()?.activeEditor.execCommand("mcePreview");
             //tinymce.get("post-create-editor").execCommand("mcePreview");
         } else {
-            console.log(postInfo);
             makePost(Urls.post.post(), {
                 title: postInfo.title,
-                author_id: "1",
+                author_id: 1,
                 tag_type: tagVal,
                 content: postInfo.content,
             }).then((resp) => {
@@ -86,8 +85,7 @@ const CreatePost = () => {
             }).catch((e) => {
 
             })
-
-            //history.push("/posts");
+            history.push(Urls.feed.slugRoot);
         }
         changeTextFlag(true);
         const oldInfo = {...postInfo};
