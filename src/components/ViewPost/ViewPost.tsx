@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import "./ViewPost.scss"
 import BlogTag from "@components/BlogTag/BlogTag";
 import {Link} from "react-router-dom";
@@ -38,7 +38,8 @@ export const PostView: React.FC<Props> = ({id}) => {
     const [likesCnt, changeLikesCnt] = useState(0);
     const [commentsCnt, changeCommentsCnt] = useState(0);
     const [comments, changeComments] = useState<Array<Comment>>([])
-
+    const [expandState, changeExpandState] = useState('unexpanded');
+    const [isScrollable, changeIsScrollable] = useState(false)
 
     const declOfNum = (n: number, text_forms: Array<string>) => {
         n = Math.abs(n) % 100;
@@ -76,10 +77,26 @@ export const PostView: React.FC<Props> = ({id}) => {
         changeComments(oldComments);
     }
 
+    useEffect(() => {
+        const postText: (HTMLElement | null) = document.querySelector('.post__text');
+        const postTextHeight: (number | undefined) = postText?.clientHeight;
+        const postTextScrollHeight: (number | undefined) = postText?.scrollHeight;
+
+        if (typeof postTextHeight === "number" &&
+            typeof postTextScrollHeight === "number" &&
+            postTextHeight !== postTextScrollHeight) {
+            changeIsScrollable(true);
+        }
+    })
+
+
+    const expandText = (e: any) => {
+        e.preventDefault()
+        expandState === 'unexpanded' ? changeExpandState('expanded') : changeExpandState('unexpanded');
+    }
 
     return (
-        <div
-            className="container-fluid flex-column h-100 justify-content-center align-items-center col-lg-10 col-xl-8 p-0 px-md-3">
+        <div className="container-fluid flex-column h-100 justify-content-center align-items-center col-lg-10 col-xl-8 p-0 px-md-3">
             <div className="card">
                 <div className="card-header d-flex flex-row flex-lg-nowrap flex-wrap justify-content-between align-items-center">
                     {isOutputFull ?
@@ -94,7 +111,7 @@ export const PostView: React.FC<Props> = ({id}) => {
                 </div>
                 <div className="card-body pt-sm-3 pt-2">
                     <BlogTagList/>
-                    <p className="mt-3">
+                    <p className={`post__text mt-3 ${expandState}`}>
                         &nbsp;Поздравляю студентов&nbsp; с окончанием семестровых курсов в
                         Технопарке!<br/>Мы
                         знаем, что это было непросто, но все вы – молодцы!&nbsp;<br/>Каждого&nbsp; успешного
@@ -115,7 +132,13 @@ export const PostView: React.FC<Props> = ({id}) => {
                         target="_blank"
                         rel="noopener">https://mailru.zoom.us/j/92900161419?pwd=UFZzbnl3TkgzbXRiWVBaU2txMEtrdz09</a><br/><br/>Мы
                         пришлем напоминание и ссылку еще раз в день вручения за пару часов до старта.&nbsp;
-                        <br/>Увидимся!&nbsp;&nbsp;</p>
+                        <br/>Увидимся!&nbsp;&nbsp;
+                    </p>
+                    <a className={`read-more ${isScrollable ? '' : 'd-none'}`}
+                       href="#"
+                       onClick={expandText}>
+                        {expandState === 'unexpanded' ? `Читать далее` : `Скрыть текст`}
+                    </a>
                     <footer className="grey-text">
                         <hr/>
                         <div className="d-flex flex-nowrap flex-row justify-content-between">

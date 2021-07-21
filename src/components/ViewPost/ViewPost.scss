@@ -120,3 +120,14 @@ p.date-time {
     width: 100%;
   }
 }
+
+p.post__text {
+  max-height: 288px;
+  line-height: 1.5;
+  overflow: hidden;
+
+  &.expanded {
+    max-height: initial;
+    overflow: initial;
+  }
+}

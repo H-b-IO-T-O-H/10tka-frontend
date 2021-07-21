@@ -42,7 +42,7 @@ const Header = () => {
 
     return (
         <React.Fragment>
-            {Rendered() ? <div className={`navbar__main mb-3`}>
+            {Rendered() ? <div className={`navbar__main`}>
                 <MDBNavbar color="teal lighten-2" dark expand="lg">
                     <MDBNavbarToggler onClick={toggleCollapse}/>
 

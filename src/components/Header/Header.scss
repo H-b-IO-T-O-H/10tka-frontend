@@ -41,14 +41,21 @@ span.main__title {
 }
 
 div.navbar__main {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
   z-index: 15;
 
   width: 100%;
   min-width: 320px;
+  height: 76px;
+
   &_strong {
     font-weight: bold;
+  }
+
+  @media screen and (max-width: #{$large-screen-min}) {
+    height: 60px;
   }
 }
 
