@@ -101,11 +101,12 @@ const Header = () => {
                                     <div className="navbar__main_strong">Создать пост</div>
                                 </MDBNavLink>
                             </MDBNavItem>
-                            <MDBNavItem active>
-                                <MDBNavLink className="navbar__main_link" to={Urls.timetable.slugEdit}>
-                                    <div className="navbar__main_strong">Конструктор расписания</div>
-                                </MDBNavLink>
-                            </MDBNavItem>
+                            {localStorage.getItem("user_role") === "admin" ?
+                                <MDBNavItem active>
+                                    <MDBNavLink className="navbar__main_link" to={Urls.timetable.slugEdit}>
+                                        <div className="navbar__main_strong">Конструктор расписания</div>
+                                    </MDBNavLink>
+                                </MDBNavItem> : null}
                             {localStorage.getItem("user_role") === "admin" ?
                                 <MDBNavItem active>
                                     <MDBNavLink className="navbar__main_link" to={Urls.panel.slugRoot}>
