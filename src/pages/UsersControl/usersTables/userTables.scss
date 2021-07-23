@@ -1,0 +1,27 @@
+div.users-table {
+  max-width: 700px;
+  position: relative;
+  min-width: 320px;
+  margin: 0 0 10px 10px;
+  text-align: center;
+
+  &__body {
+    border-radius: 0 0 10px 10px;
+    border: 1px solid #f2f2fa;
+  }
+}
+
+div.users-table button.users-table__redo {
+  position: absolute;
+  top: 2px;
+  right: 5px;
+}
+
+.table-hover tbody tr:hover > td{
+  cursor: pointer;
+  color: white;
+  background: #4285f4 !important;
+  font-weight: bold;
+}
+
+

@@ -1,0 +1,39 @@
+@import "../../styles/main";
+
+textarea.hidden__text {
+  max-height: 100px;
+  padding: 2px 5px;
+  max-width: 220px;
+  height: 30px;
+  min-height: 30px;
+  border: 1px solid #a8a8a8;
+  border-radius: 10px;
+  color: #6c6c6c;
+  font-size: 1rem;
+  outline: none;
+  -moz-appearance: none;
+  @media screen and (max-width: #{$little-screen-min}) {
+    width: 40px;
+    height: 50px;
+    font-size: 0.8rem;
+    &::placeholder {
+      font-size: 0.5rem;
+    }
+  }
+  @media screen and (min-width: #{$little-screen-min}) and (max-width: #{$medium-screen-min}) {
+    width: 140px;
+    font-size: 0.9rem;
+    &::placeholder {
+      font-size: 0.8rem;
+    }
+  }
+}
+
+textarea.hidden__text:focus {
+  border-color: #4db6ac;
+}
+
+textarea::placeholder {
+  color: #bbbbbb;
+  font-size: 0.9rem;
+}

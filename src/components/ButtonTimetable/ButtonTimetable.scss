@@ -1,0 +1,40 @@
+@import "../../styles/main";
+
+.btn-custom {
+  background-color: transparent;
+  border: 1px solid transparent;
+  margin: .375rem;
+  border-radius: 3px;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  vertical-align: middle;
+  transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+  color: #d6f0f2;
+
+  &__title {
+    font-weight: 600;
+  }
+
+  &:disabled {
+    opacity: .65;
+  }
+
+  &:hover {
+    box-shadow: 0 2px 5px 0 #999999, 0 2px 10px 0 #6c6c6c;
+  }
+
+  @media screen and (max-width: #{$little-screen-min}) {
+    width: 45px;
+    max-height: 20px;
+    font-size: 0.7rem;
+  }
+  @media screen and (min-width: #{$little-screen-min}) and (max-width: #{$medium-screen-min}) {
+    width: 70px;
+    max-height: 25px;
+    font-size: 0.9rem;
+  }
+  @media screen and (min-width: #{$medium-screen-min}) {
+    width: 80px;
+    max-height: 25px;
+    font-size: 1rem;
+  }
+}

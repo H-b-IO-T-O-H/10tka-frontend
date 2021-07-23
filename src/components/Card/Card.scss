@@ -1,0 +1,36 @@
+.Home-Card {
+  min-width: 220px;
+  height: 155px;
+  margin: 15px;
+  border: 1px solid #dfdfdf;
+  display: flex;
+  flex-direction: column;
+  border-radius: 11px;
+}
+
+.Home-Card__title {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-bottom: 0;
+  color: aliceblue;
+  text-align: center;
+  border-radius: 10px 10px 0 0;
+}
+
+.Home-Card-list__item {
+  border-radius: 5px !important;
+  margin-bottom: 0.5rem;
+  padding: 0;
+
+}
+.Home-Card__list {
+  margin: 5px;
+  overflow-y: auto;
+}
+
+.list_empty {
+  text-align: center;
+  color: grey;
+  font-weight: bold;
+  font-size: 0.8rem;
+}

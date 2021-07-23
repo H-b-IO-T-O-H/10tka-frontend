@@ -1,0 +1,111 @@
+div.post-view-card {
+  min-width: 320px;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 2px 5px 0 #5f938b, 0 2px 10px 0 #95bbb6;
+}
+
+img.post-avatar-sm {
+  border-radius: 4px;
+  height: 25px;
+  margin-right: 4px;
+  vertical-align: middle;
+  width: 25px;
+}
+
+i.post-icon-comment {
+
+}
+
+i.post-icon-comment:hover {
+  color: #697cd9;
+  cursor: pointer;
+}
+
+i.post-icon-like {
+
+}
+
+i.post-icon-like:hover {
+  color: #ea8585;
+  cursor: pointer;
+}
+
+button.btn-post-social {
+  outline: none;
+  border: 1px solid transparent;
+  background-color: transparent;
+  transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+button.btn-post-social:active {
+  transform: translateZ(0) translateY(3px);
+}
+
+button.btn-post-comment {
+
+}
+
+button.btn-post-comment:hover {
+  color: red;
+}
+
+
+button.btn-post-like {
+
+}
+
+a.href-transparent {
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+}
+
+img.post-comment-avatar {
+  border-radius: 8px;
+  height: 40px;
+  width: 40px;
+}
+
+p.post-title {
+  font-weight: 500;
+  font-size: 1.15rem;
+}
+
+textarea.post-comment-create {
+
+}
+
+div.post-comment-content {
+  width: 70%;
+}
+
+img.post-avatar-lg {
+  border-radius: 4px;
+  height: 50px;
+  vertical-align: middle;
+  width: 50px;
+}
+
+div.post-comment-new {
+  background-color: #f4fff8;
+}
+
+button.blue-color {
+  color: #007bff;
+}
+
+div.post-comment {
+  font-weight: 400;
+}
+
+div.post-comment-answer {
+  border-left: .25rem solid #eceeef;
+  margin-left: 1rem;
+  width: 75%;
+}
+
+p.date-time {
+  font-size: 0.9rem;
+  font-weight: 400;
+}

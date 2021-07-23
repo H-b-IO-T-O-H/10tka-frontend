@@ -1,0 +1,23 @@
+@import "../../styles/main";
+
+.table-wrap{
+    overflow-x:auto;
+}
+table.table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    @media screen and (max-width: #{$little-screen-min}) {
+        font-size: 0.6rem;
+    }
+    @media screen and (min-width: #{$little-screen-min}) and (max-width: #{$medium-screen-min}){
+        font-size: 0.8rem;
+    }
+
+    @media screen and (min-width: #{$medium-screen-min}){
+        font-size: 0.9rem;
+    }
+    th {
+        font-weight: 400;
+    }
+}
+

@@ -1,0 +1,112 @@
+.timetable {
+  border: 1px solid #000000;
+  box-sizing: border-box;
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.25);
+  background-color: #BE9BC4;
+  border-radius: 15px;
+  margin-left: 1%;
+  position: absolute;
+  width: 98%;
+  height: 88%;
+  margin-top: 50%;
+}
+
+.text__container {
+  display: flex;
+  justify-content: space-evenly;
+  font-size: 20px;
+  font-family: Helvetica;
+  margin-top: 0.5%;
+}
+
+.timetable__text__main {
+  height: 30px;
+  width: 40px;
+}
+
+.button__container {
+  display: inline-flex;
+  justify-content: space-between;
+  position: absolute;
+  background-color: #C4C4C4;
+  width: 60px !important;
+  height: 30px !important;
+  border-radius: 15px;
+}
+
+.ClearTable1 {
+  position: relative !important;
+  opacity: 0.5 !important;
+  background-color: green !important;
+  z-index: -2 !important;
+}
+
+.timetable__denominator {
+  position: relative;
+  margin: -1% 1% 1% 1%;
+  border: 3px solid black;
+  background-color: #934ADD;
+  width: 98%;
+  height: 90%;
+}
+
+.button__change__week {
+  z-index: 2;
+  border-radius: 15px;
+  background-color: #934ADD;
+  position: relative;
+  width: 30px !important;
+  height: 30px !important;
+}
+
+.MoveRight1 {
+  background-color: green;
+  transform: translateX(30px);
+  transition-duration: 0.5s;
+}
+
+
+.MoveLeft1 {
+  background-color: #934ADD;
+  transform: translateX(-0px);
+  transition-duration: 0.5s;
+}
+
+.MoveRight2 {
+  background-color: green;
+  transform: translateX(30px);
+  transition-duration: 0.5s;
+}
+
+.MoveLeft2 {
+  background-color: #934ADD;
+  transform: translateX(-0px);
+  transition-duration: 0.5s;
+}
+
+.MoveRight3 {
+  background-color: green;
+  transform: translateX(30px);
+  transition-duration: 0.5s;
+}
+
+ul.week__container {
+  display: inline-flex !important;;
+}
+
+ul.week__container li {
+  overflow: hidden;
+}
+
+.denominator__text {
+  position: absolute;
+  z-index: 1;
+  margin: 5px 0px 5px 4px;
+  font-family: Helvetica;
+  font-size: 14px;
+}
+
+
+
+
+
