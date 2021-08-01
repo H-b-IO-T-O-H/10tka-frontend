@@ -33,10 +33,9 @@ const Header = () => {
             postId = parseInt(urlPath[urlPath.length - 1]);
         }
         return [Urls.feed.slugRoot, Urls.timetable.slugEdit,
-        Urls.panel.slugRoot, Urls.root,
-        `${Urls.post.slugRoot}/${postId}`, Urls.post.slugCreate,
-        Urls.user.slugMe, Urls.user.slugRoot, Urls.user.slugProfile].includes(path)
-
+            Urls.panel.slugRoot, Urls.root,
+            `${Urls.post.slugRoot}/${postId}`, Urls.post.slugCreate,
+            Urls.user.slugMe, Urls.user.slugRoot, Urls.user.slugProfile].includes(path)
     }
 
     const [collapseCondition, setCollapseCondition] = useState('closed');

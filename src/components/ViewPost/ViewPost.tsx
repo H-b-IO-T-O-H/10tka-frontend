@@ -159,6 +159,7 @@ export const PostView: React.FC<Props> = ({id, data}) => {
         }
     })
 
+
     const expandText = (e: any) => {
         e.preventDefault()
         expandState === 'unexpanded' ? changeExpandState('expanded') : changeExpandState('unexpanded');
