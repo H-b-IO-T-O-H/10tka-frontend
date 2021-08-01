@@ -1,4 +1,4 @@
-import React, {Component, useState} from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import ViewPost from "@components/ViewPost";
 import Pagination from "@components/Pagination";
 import {makeGet} from "@utils/network";
@@ -9,9 +9,9 @@ import StatusLabel from "@components/StatusLabel";
 
 const PostsList = () => {
     const [label, showLabel] = useState({content: "", success: false});
-    const [posts, changePosts] = React.useState<Array<React.ReactNode>>([])
+    const [posts, changePosts] = useState<Array<React.ReactNode>>([])
 
-    React.useEffect(() => {
+    useEffect(() => {
         const oldPosts: Array<React.ReactNode> = [];
 
         makeGet(Urls.post.getList(0, 0)).then((resp) => {
@@ -21,7 +21,7 @@ const PostsList = () => {
                 let postsList = resp.data;
                 console.log(resp.data)
                 for (let i = 0; i < postsList.length; ++i) {
-                    oldPosts.push(<div className="m-3" key={i}><PostView id={i} data={postsList[i]}/></div>)
+                    oldPosts.push(<div key={i}><PostView id={i} data={postsList[i]}/></div>)
                 }
                 changePosts(oldPosts);
             }
@@ -35,7 +35,7 @@ const PostsList = () => {
     return (
         <div>
             <StatusLabel info={label}/>
-            <div className="container-fluid">
+            <div className="container-fluid p-0">
                 {posts.length > 0 ? posts : <div className="d-flex flex-center">Посты не найдены</div>}
                 <div className="d-flex flex-center">
                     <Pagination/>

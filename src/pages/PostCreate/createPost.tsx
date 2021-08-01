@@ -163,13 +163,13 @@ const CreatePost = () => {
                     <div className="d-flex flex-row">
                         <div className="col-2 d-flex flex-column flex-nowrap align-items-center">
                             <img id="blah" src={postInfo.postImgUrl} alt="img not loaded" className="post-img"/>
-                            <input className="post-img" type="file" id="post-img" accept="image/*"
-                                   onChange={handleImgChange}/>
-                            <button className="btn-upload-img" type="button" onClick={() => {
-                                postImgInput?.click()
-                            }}>
-                                <span className="btn-title">...</span>
-                            </button>
+                            {/*<input className="post-img" type="file" id="post-img" accept="image/*"*/}
+                            {/*       onChange={handleImgChange}/>*/}
+                            {/*<button className="btn-upload-img" type="button" onClick={() => {*/}
+                            {/*    postImgInput?.click()*/}
+                            {/*}}>*/}
+                            {/*    <span className="btn-title">...</span>*/}
+                            {/*</button>*/}
                         </div>
                         <div className="col-10">
                             <div className="grey-text">

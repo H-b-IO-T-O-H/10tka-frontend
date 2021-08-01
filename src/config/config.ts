@@ -30,6 +30,12 @@ export const LessonsTime = [
 ]
 
 //blog
+export const TAGS = [
+    { id: 'general', title: "Общие вопросы", color: "#697cd9", hoverColor: "#3650e3" },
+    { id: 'important', title: "Важное", color: "#e06b6b", hoverColor: "#e54444" },
+    { id: 'educational', title: "Учебная работа", color: "#6abf6c", hoverColor: "#399e3b" },
+]
+
 export const TAG_GENERAL = "Общие вопросы";
 export const TAG_IMPORTANT = "Важное";
 export const TAG_EDUCATIONAL = "Учебная работа";

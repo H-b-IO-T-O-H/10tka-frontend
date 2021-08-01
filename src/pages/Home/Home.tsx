@@ -86,10 +86,10 @@ const Home = () => {
 
     return (
         <div>
-            <div className="d-flex flex-row justify-content-center align-items-center">
+            <div className="container d-flex flex-row justify-content-center align-items-center">
                 {orgInfo.group !== "" ?
                     <div
-                        className="timetable__title">{`Информация о группе ${orgInfo.group}, ${orgInfo.week_type}`}</div> :
+                         className="timetable__title">{`Информация о группе ${orgInfo.group}, ${orgInfo.week_type}`}</div> :
                     <div className="timetable__title">Вы не прикреплены ни к одной из учебных групп</div>
                 }
             </div>
