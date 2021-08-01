@@ -1,15 +1,14 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React, { useCallback, useEffect, useState} from "react";
 import "./ViewPost.scss"
-import BlogTag from "@components/Blog/blogTag";
 import {Link} from "react-router-dom";
 import {useHistory, useLocation} from "react-router-dom";
-import PostComment from "@components/PostCommentView";
 import Hamster from "@media/hamster.webp"
 import CommentView from "@components/PostCommentView";
 import {Urls} from "@config/urls";
 import {makeDelete, makeGet} from "@utils/network";
 import HTMLReactParser from 'html-react-parser';
 import StatusLabel from "@components/StatusLabel";
+import BlogTagList from "@components/BlogTagList";
 
 let answersExample = [
     {text: "first answer text"},
@@ -46,12 +45,15 @@ export const PostView: React.FC<Props> = ({id, data}) => {
     const commentsForm = ["Комментарий", "Комментария", "Комментариев"];
     const history = useHistory();
     const location = useLocation();
-    const [isOutputFull, changeOutputFull] = React.useState(false);
-    const [isLiked, changeLiked] = React.useState(false);
-    const [likesCnt, changeLikesCnt] = React.useState(0);
-    const [commentsCnt, changeCommentsCnt] = React.useState(0);
-    const [comments, changeComments] = React.useState<Array<Comment>>([]);
-    const [postData, changePostData] = React.useState({
+
+    const [isOutputFull, changeOutputFull] = useState(false);
+    const [isLiked, changeLiked] = useState(false);
+    const [likesCnt, changeLikesCnt] = useState(0);
+    const [commentsCnt, changeCommentsCnt] = useState(0);
+    const [comments, changeComments] = useState<Array<Comment>>([]);
+    const [expandState, changeExpandState] = useState('unexpanded');
+    const [isScrollable, changeIsScrollable] = useState(false)
+    const [postData, changePostData] = useState({
         post_id: 0,
         title: "",
         author_id: 0,
@@ -61,6 +63,7 @@ export const PostView: React.FC<Props> = ({id, data}) => {
         is_edited: false,
         comments: false
     });
+
 
     useEffect(() => {
         if (location.pathname.includes('/posts')) {
@@ -89,7 +92,6 @@ export const PostView: React.FC<Props> = ({id, data}) => {
             changePostData(data);
         }
     }, [])
-
 
     const declOfNum = (n: number, text_forms: Array<string>) => {
         n = Math.abs(n) % 100;
@@ -127,7 +129,7 @@ export const PostView: React.FC<Props> = ({id, data}) => {
         changeComments(oldComments);
     }
 
-    const deletePost = React.useCallback(() => {
+    const deletePost = useCallback(() => {
         makeDelete(Urls.post.delete(data.post_id), null).then((resp) => {
             if (resp.status === 200) {
                 showLabel({success: true, content: "Пост успешно удален."});
@@ -144,49 +146,86 @@ export const PostView: React.FC<Props> = ({id, data}) => {
         })
     }, [])
 
+
+    useEffect(() => {
+        const postText: (HTMLElement | null) = document.querySelector(`#postContent-${postData.post_id}`);
+        const postTextHeight: (number | undefined) = postText?.clientHeight;
+        const postTextScrollHeight: (number | undefined) = postText?.scrollHeight;
+
+        if (typeof postTextHeight === "number" &&
+            typeof postTextScrollHeight === "number" &&
+            postTextHeight !== postTextScrollHeight) {
+            changeIsScrollable(true);
+        }
+    })
+
+    const expandText = (e: any) => {
+        e.preventDefault()
+        expandState === 'unexpanded' ? changeExpandState('expanded') : changeExpandState('unexpanded');
+    }
+
     return (
-        <div
-            className="container-fluid flex-column h-100 justify-content-center align-items-center col-md-10 col-xl-7">
+        <div className="container-fluid flex-column h-100 justify-content-center align-items-center col-lg-10 col-xl-8 p-3">
             <StatusLabel info={label}/>
             <div className="card">
-                <div className="card-header d-flex flex-row justify-content-between">
+                <div className="card-header d-flex flex-row flex-lg-nowrap flex-wrap justify-content-between align-items-center">
                     {isOutputFull ?
-                        <p className="post-title">{postData.title}</p>
+                        <p className="post-title mr-lg-4 mb-lg-3 mb-2">{postData.title}</p>
                         :
-                        <Link to={`/posts/${postData.post_id}`}><p className="post-title">{postData.title}</p></Link>
+                        <Link to={`/posts/${postData.post_id}`}><p className="post-title mr-lg-4 mb-lg-3 mb-2">{postData.title}</p></Link>
                     }
 
-                    <p className="date-time grey-text">{postData.created}</p>
+                    <p className="date-time grey-text mb-lg-3 mb-md-2 mb-1">{postData.created}</p>
                 </div>
-                <div className="card-body">
-                    <BlogTag/>
+                <div className="card-body pt-sm-3 pt-2">
+                    <BlogTagList/>
                     <p>{postData.tag_type}</p>
-                    {HTMLReactParser(postData.content)}
-                    <button className="btn-post-social btn-post-like"
-                            onClick={deletePost}><i className="fa fa-trash fa-lg"/></button>
+
+                    <div className={`post__content mt-3 ${expandState}`} id={`postContent-${postData.post_id}`}>
+                        {HTMLReactParser(postData.content)}
+                    </div>
+
+                    <a className={`read-more mt-3 ${isScrollable ? 'd-block' : 'd-none'}`}
+                       href="#"
+                       onClick={expandText}>
+                        {expandState === 'unexpanded' ? `Читать далее` : `Скрыть текст`}
+                    </a>
+                    <button className="btn-post-social btn-post-like mt-2"
+                            onClick={deletePost}>
+                        <i className="fa fa-trash fa-lg"/>
+                    </button>
+
                     <footer className="grey-text">
                         <hr/>
                         <div className="d-flex flex-nowrap flex-row justify-content-between">
                             <div className="ml-0">
-                                <img className="post-avatar-sm" src="/public/img/hamster.webp"
-                                     alt="img not loaded"/>
                                 <Link to={Urls.user.getUser(1)}>
-                                    Сергей Козлачков
+                                    <img className="post-avatar-sm" src={Hamster}
+                                         alt="img not loaded"/>
+                                    <span className="d-none d-sm-inline">{'Сергей Козлачков'}</span>
                                 </Link>
                             </div>
 
                             <div className="mr-3">
                                 <a id="go-to-comments" className="href-transparent" href="#comments"/>
                                 <button className="btn-post-social" onClick={commentsRedirectHandler}>
-                                    <i className="fa fa-comments fa-lg post-icon-comment"/></button>
-                                {'5 комментов'}
+                                    <i className="fa fa-comments fa-lg post-icon-comment"/>
+                                </button>
+                                <p className="d-inline">
+                                    {commentsCnt}
+                                    <span  className="d-none d-lg-inline">
+                                        {' комментов'}
+                                    </span>
+
+                                </p>
                                 <button className="btn-post-social btn-post-like"
                                         onClick={() => {
                                             changeLiked(!isLiked);
                                             changeLikesCnt(isLiked ? likesCnt - 1 : likesCnt + 1);
                                         }}><i
                                     className="fa fa-heart fa-lg post-icon-like"
-                                    style={isLiked ? {color: "#ff4a4a"} : undefined}/></button>
+                                    style={isLiked ? {color: "#ff4a4a"} : undefined}/>
+                                </button>
                                 {likesCnt}
                             </div>
                         </div>

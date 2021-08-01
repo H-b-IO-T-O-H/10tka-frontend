@@ -6,12 +6,12 @@ const Pagination = () => {
         <MDBRow>
             <MDBCol>
                 <MDBPagination color="teal" circle>
-                    <MDBPageItem disabled>
+                    <MDBPageItem className="d-sm-flex d-none" disabled>
                         <MDBPageNav className="page-link">
                             <span>First</span>
                         </MDBPageNav>
                     </MDBPageItem>
-                    <MDBPageItem disabled>
+                    <MDBPageItem className="d-sm-flex d-none" disabled>
                         <MDBPageNav className="page-link" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                             <span className="sr-only">Previous</span>
@@ -42,12 +42,12 @@ const Pagination = () => {
                             5
                         </MDBPageNav>
                     </MDBPageItem>
-                    <MDBPageItem>
+                    <MDBPageItem className="d-sm-flex d-none">
                         <MDBPageNav className="page-link">
                             &raquo;
                         </MDBPageNav>
                     </MDBPageItem>
-                    <MDBPageItem>
+                    <MDBPageItem className="d-sm-flex d-none">
                         <MDBPageNav className="page-link">
                             Last
                         </MDBPageNav>
